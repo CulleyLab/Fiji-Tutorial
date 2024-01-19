@@ -77,8 +77,7 @@
     </ciManagement>
 
     <properties>
-        <main-class>com.mycompany.Main</main-class>
-        <package-name>com.mycompany.exmyomorph.Fiji_tutorial</package-name>
+        <package-name>com.mycompany.Fiji_tutorial</package-name>
         <license.licenseName>cc0</license.licenseName>
         <license.copyrightOwners>N/A</license.copyrightOwners>
     </properties>

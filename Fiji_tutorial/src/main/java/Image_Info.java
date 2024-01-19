@@ -1,5 +1,3 @@
-package main.java;
-
 import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.DialogListener;
@@ -84,8 +82,6 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         beforeSetupDialog();
         setupDialog();
     }
-
-    public void execute() throws InterruptedException {}
 
     public static void main(String[] args){
         Class<?> clazz = Image_Info.class;
