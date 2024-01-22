@@ -1,6 +1,6 @@
 import ij.IJ;
 import ij.ImagePlus;
-import ij.WindowManager;
+
 import ij.gui.DialogListener;
 import ij.gui.GenericDialog;
 import ij.gui.NonBlockingGenericDialog;

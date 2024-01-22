@@ -48,8 +48,8 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
         gd = new NonBlockingGenericDialog("Hyperstack manipulation: z stacks");
         gd.addDialogListener(this);
 
-        gd.addMessage("We're still sticking with our trusty friend, mitosis.tif," +
-                "\nwhich you should still have open. Please make sure it is the currently active window!");
+        gd.addMessage(GdFormatting.addLineBreaks("We're still sticking with our trusty friend, mitosis.tif," +
+                " which you should still have open. Please make sure it is the currently active window!", 80));
 
         gd.addMessage("Occasionally, you will want to project 3D data as a 2D image. In Fiji," +
                 "\nthis is called z projection.");
@@ -57,8 +57,8 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
                 "\n- Image > Stacks > Z Project..." +
                 "\n- The 'Stk' button on the toolbar > Z Project...");
 
-        gd.addMessage("Make an average intensity Z projection and a maximum intensity Z projection" +
-                "\nof mitosis.tif (keep 'all time frames' ticked)");
+        gd.addMessage(GdFormatting.addLineBreaks("Make an average intensity Z projection and a maximum intensity Z projection" +
+                " of mitosis.tif (keep 'all time frames' ticked)", 80));
         gd.addButton("Check you have made the projections correctly", this);
 
         gd.addRadioButtonGroup("Which projection method looks brighter?",
@@ -73,6 +73,14 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
                 "\nyour maximum intensity projected stack (MAX_mitosis.tif)?",
                 new String[]{"?", "Nothing", "The channels are averaged", "The frames are averaged"},
                 2, 2, "?");
+
+        gd.addMessage(GdFormatting.addLineBreaks("Fiji can display images in 3D, but it is slow to render " +
+                "and doesn't look very nice. If you want to do this (on the original mitosis.tif image, without " +
+                "any z projection), this is found in Image > Stacks > 3D Project... I don't really recommend " +
+                "using Fiji for 3D visualisation. For axial (Z) information, it can be more helpful to look at the " +
+                "XZ and YZ projections of the stack. This can be done (again, for the original mitosis.tif image) " +
+                "by going to Image > Stacks > Orthogonal Views (keyboard shortcut shift + h). You can drag the " +
+                "yellow crosshair around to get different slices through the data.", 80));
 
         gd.showDialog();
     }
