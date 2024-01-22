@@ -26,13 +26,7 @@ public class Exploring_images implements PlugIn, DialogListener, ActionListener 
 
         // load pombe image
 
-        imp = IJ.openImage("src/main/resources/Nup60_pombe_z-stack.tif");
-        ClassLoader classLoader = Exploring_images.class.getClassLoader();
-        String imagePath = "Nup60_pombe_z-stack.tif"; // Adjust the path accordingly
-
-        // Use the class loader to load the image as a resource
-        java.net.URL imageURL = classLoader.getResource(imagePath);
-        imp = IJ.openImage(imageURL.toString());
+        imp = OpenImageHelper.openNup60Stack();
 
         imp.show();
 

@@ -16,31 +16,8 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
     ImagePlus imp;
 
     public void beforeSetupDialog(){
-        String[] imageTitles = WindowManager.getImageTitles();
-        if(imageTitles.length==0){
-            imp = IJ.openImage("http://imagej.net/images/Spindly-GFP.zip");
-            imp.show();
-            return;
-        }
-        else if(imageTitles.length==1){
-            if(imageTitles[0].startsWith("mitosis")){
-                imp = WindowManager.getCurrentImage();
-                return;
-            }
-        }
-        else{
-            boolean mitosisOpen = false;
-            for(String title:imageTitles){
-                if (title.equals("mitosis.tif")) {
-                    mitosisOpen = true;
-                    break;
-                }
-            }
-            if(!mitosisOpen){
-                imp = IJ.openImage("http://imagej.net/images/Spindly-GFP.zip");
-                imp.show();
-            }
-        }
+        imp = OpenImageHelper.openMitosisTif();
+        imp.show();
     }
 
     public void setupDialog(){
