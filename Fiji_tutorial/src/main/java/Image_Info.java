@@ -25,10 +25,13 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         gd.addDialogListener(this);
 
         gd.addMessage("Hyperstacks are 4-dimensional or 5-dimensional images." +
-                "\nThe following questions all refer to the window 'mitosis.tif'," +
-                "\nwhich should have opened automatically");
+                "\nThe following questions all refer to the window 'mitosis.tif', which should have opened automatically");
 
         gd.addMessage("");
+
+        gd.addRadioButtonGroup("How many pixels wide is this image?",
+                new String[]{"?", "15.13 pixels wide", "17.35 pixels wide", "171 pixels wide",
+                "196 pixels wide"}, 1,5, "?");
 
         gd.addRadioButtonGroup("How many channels are in this image?",
                 new String[]{"?", "2 channels", "5 channels", "51 channels"},
@@ -71,9 +74,7 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         gd.addMessage("You can also inspect the metadata associated with an image by either:" +
                 "\n - Going to the 'Image' menu, then 'Show Info..." +
                 "\n - Pressing the i key when an image is the active window");
-        gd.addMessage("This image has very simple metadata, including all of the answers to" +
-                "\nthe above! Normally, images have much more complex metadata with all" +
-                "\nof the properties of the microscope and acquisition settings used.");
+        gd.addMessage("Normally, images have much more complex metadata with all of the properties of the microscope and acquisition settings used.");
         gd.showDialog();
 
     }
@@ -100,6 +101,20 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         if(awtEvent == null) return true;
 
         String eventString = awtEvent.paramString();
+
+        // check if they did size correctly
+        if(eventString.contains("wide")){
+            if(eventString.contains("171")){
+                IJ.showMessage("Well done! The image is 171 pixels wide and 196 pixels high.");
+            }
+            else if(eventString.contains(".")){
+                IJ.showMessage("Try again - the questions want number of pixels, not calibrated dimensions");
+            }
+            else if(eventString.contains("196")){
+                IJ.showMessage("Try again - image dimensions are displayed at the top of the image in the" +
+                        "\norder width x height.");
+            }
+        }
 
         // check if they did channel correctly
         if(eventString.contains("channel")){
