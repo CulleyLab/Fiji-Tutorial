@@ -28,8 +28,8 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
         gd.addMessage(GdFormatting.addLineBreaks("We're still sticking with our trusty friend, mitosis.tif," +
                 " which you should still have open. Please make sure it is the currently active window!", 80));
 
-        gd.addMessage("Occasionally, you will want to project 3D data as a 2D image. In Fiji," +
-                "\nthis is called z projection.");
+        gd.addMessage(GdFormatting.addLineBreaks("Occasionally, you will want to project 3D data as a 2D image. In Fiji," +
+                "this is called z projection.", 80));
         gd.addMessage("Z Projection can be accessed in two ways:" +
                 "\n- Image > Stacks > Z Project..." +
                 "\n- The 'Stk' button on the toolbar > Z Project...");
@@ -70,42 +70,45 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
 
         if(eventString.contains("brighter")){
             if(eventString.contains("Max")){
-                IJ.showMessage("Well done - maximum intensity projections will have higher pixel values than" +
-                        "\naverage projections, as for each pixel in the image contains the value of the brightest" +
-                        "\npixel for that channel/frame across all z slices. The average intensity projection is the" +
-                        "\nmean pixel value across all z slices for that channel/frame.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Well done - maximum intensity projections will have higher pixel values than" +
+                        " average projections, as for each pixel in the image contains the value of the brightest" +
+                        " pixel for that channel/frame across all z slices. The average intensity projection is the" +
+                        " mean pixel value across all z slices for that channel/frame.", 80));
             }
             else{
-                IJ.showMessage("Try again - if you adjusted the brightness or contrast of your images" +
-                        "\nto match each other, see which image has the higher pixel values.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - if you adjusted the brightness or contrast of your images" +
+                        " to match each other, see which image has the higher pixel values.", 80));
             }
         }
         else if(eventString.contains("sharper")){
             if(eventString.contains("Max")){
-                IJ.showMessage("Well done - maximum intensity projections often look sharper, as ideally" +
-                        "\nthe brightest pixels are the ones that are best in focus. However, maximum intensity" +
-                        "\nprojections can suffer if there are very bright out-of-focus objects in addition to" +
-                        "\nthe structure of interest, or if there are 'hot' pixels in the camera chip which have" +
-                        "\nconstantly high intensities.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Well done - maximum intensity projections often look sharper, as ideally" +
+                        " the brightest pixels are the ones that are best in focus. However, maximum intensity" +
+                        " projections can suffer if there are very bright out-of-focus objects in addition to" +
+                        " the structure of interest, or if there are 'hot' pixels in the camera chip which have" +
+                        " constantly high intensities.", 80));
             }
             else{
-                IJ.showMessage("Try again - compare the appearance of the green channel between the two at" +
-                        "\ntime point 31 (you may need to adjust brightness/contrast.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - compare the appearance of the green " +
+                        "channel between the two at" +
+                        "time point 31 (you may need to adjust brightness/contrast).", 80));
             }
         }
 
         else if(eventString.contains("Nothing")){
-                IJ.showMessage("Try again - make sure you had the MAX_mitosis.tif image active when you" +
-                        "\nran the z projection.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - make sure you had the MAX_mitosis.tif " +
+                        "image active when you" +
+                        "ran the z projection.", 80));
             }
         else if(eventString.contains("channels are averaged")){
-                IJ.showMessage("Try again - look at the sliders in the projected image and the numbers in" +
-                        "\nthe image information bar");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - look at the sliders in the projected " +
+                        "image and the numbers in" +
+                        "the image information bar", 80));
         }
         else if(eventString.contains("frames are averaged")){
-                IJ.showMessage("Well done. If a hyperstack contains multiple z slices, these will be projected." +
-                        "\nIf there is only one z slices, but multiple time frames, Fiji will project the time frames." +
-                        "\nFiji should never project channels together.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Well done. If a hyperstack contains multiple z slices, these will be projected." +
+                        " If there is only one z slices, but multiple time frames, Fiji will project the time frames." +
+                        " Fiji should never project channels together.", 80));
         }
 
         return true;
@@ -161,8 +164,8 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
             int nFramesMax = impMax.getNFrames();
 
             if(nChannelsMax!=2 || nFramesMax != 51){
-                IJ.showMessage("Make sure that you did your maximum intensity projection when mitosis.tif" +
-                        "\nwas the active image");
+                IJ.showMessage(GdFormatting.addLineBreaks("Make sure that you did your maximum intensity projection when mitosis.tif" +
+                        " was the active image", 80));
                 return;
             }
 
@@ -171,13 +174,14 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
             int nFramesAvg = impAvg.getNFrames();
 
             if(nChannelsAvg!=2 || nFramesAvg!=51){
-                IJ.showMessage("Make sure that you did your average intensity projection when mitosis.tif" +
-                        "\nwas the active image");
+                IJ.showMessage(GdFormatting.addLineBreaks("Make sure that you did your average intensity projection when mitosis.tif" +
+                        " was the active image", 80));
                 return;
             }
 
-            IJ.showMessage("Well done - you produced maximum and average intensity projections of mitosis.tif." +
-                    "\nNote that you still have both channels and all time frames present in both images.");
+            IJ.showMessage(GdFormatting.addLineBreaks("Well done - you produced maximum and average intensity " +
+                    "projections of mitosis.tif." +
+                    " Note that you still have both channels and all time frames present in both images.", 80));
         }
 
     }

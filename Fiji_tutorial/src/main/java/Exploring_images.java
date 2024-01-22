@@ -114,7 +114,7 @@ public class Exploring_images implements PlugIn, DialogListener, ActionListener 
         else if(eventString.contains("No")) {
             IJ.showMessage(GdFormatting.addLineBreaks("Try again - adjusting the sliders shouldn't affect the values stored within" +
                     " the image, just how they are visualised, but there is one dangerous button in the Brightness/Contrast" +
-                    "window!", 80));
+                    " window!", 80));
         }
         else if(eventString.contains("Apply")){
             IJ.showMessage(GdFormatting.addLineBreaks("Well done - adjusting the sliders shouldn't affect the values stored within" +

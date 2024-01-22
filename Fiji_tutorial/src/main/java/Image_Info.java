@@ -16,7 +16,7 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
     ImagePlus imp;
 
     public void beforeSetupDialog(){
-        imp = IJ.openImage("http://imagej.net/images/Spindly-GFP.zip");
+        imp = OpenImageHelper.openMitosisTif();
         imp.show();
     }
 
@@ -24,8 +24,8 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         gd = new NonBlockingGenericDialog("Exploring properties of hyperstacks");
         gd.addDialogListener(this);
 
-        gd.addMessage("Hyperstacks are 4-dimensional or 5-dimensional images." +
-                "\nThe following questions all refer to the window 'mitosis.tif', which should have opened automatically");
+        gd.addMessage(GdFormatting.addLineBreaks("Hyperstacks are 4-dimensional or 5-dimensional images. " +
+                "The following questions all refer to the window 'mitosis.tif', which should have opened automatically", 80));
 
         gd.addMessage("");
 
@@ -74,7 +74,8 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         gd.addMessage("You can also inspect the metadata associated with an image by either:" +
                 "\n - Going to the 'Image' menu, then 'Show Info..." +
                 "\n - Pressing the i key when an image is the active window");
-        gd.addMessage("Normally, images have much more complex metadata with all of the properties of the microscope and acquisition settings used.");
+        gd.addMessage(GdFormatting.addLineBreaks("Normally, images have much more complex metadata with all of the properties of " +
+                "the microscope and acquisition settings used.", 80));
         gd.showDialog();
 
     }
@@ -111,20 +112,20 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
                 IJ.showMessage("Try again - the questions want number of pixels, not calibrated dimensions");
             }
             else if(eventString.contains("196")){
-                IJ.showMessage("Try again - image dimensions are displayed at the top of the image in the" +
-                        "\norder width x height.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - image dimensions are displayed at the top of the image in " +
+                        "the order width x height.", 80));
             }
         }
 
         // check if they did channel correctly
         if(eventString.contains("channel")){
             if(eventString.contains("2")){
-                IJ.showMessage("Correct! This image has two channels." +
-                        "\nThe green channel is a tubulin stain, the red channel is labelled Aurora.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Correct! This image has two channels. The green channel is a tubulin " +
+                        "stain, the red channel is fluorescently-labelled Aurora.", 80));
             }
             else{
-                IJ.showMessage("Try again - channels are usually the different colours in an image." +
-                        "\nClue: Fiji indicates number of channels with the letter 'c' at the top of the image...");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - channels are usually the different colours in an image. " +
+                        "Clue: Fiji indicates number of channels with the letter 'c' at the top of the image...", 80));
             }
         }
 
@@ -135,21 +136,22 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
                         "\nThe frames show the progression of mitosis over time.");
             }
             else{
-                IJ.showMessage("Try again - frames are the different time points at which both channels and" +
-                        " a z-stack were acquired. \nClue: Fiji indicates number of frames with the letter " +
-                        "'t' (for time) at the top of the image.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - frames are the different time points " +
+                        "at which both channels and" +
+                        " a z-stack were acquired. Clue: Fiji indicates number of frames with the letter " +
+                        "'t' (for time) at the top of the image.", 80));
             }
         }
 
         // check if they did slices correctly
         if(eventString.contains("slices")){
             if(eventString.contains("51") || eventString.contains("2")){
-                IJ.showMessage("Try again - slices are the different focal depths that were imaged." +
-                        "\nClue: Fiji indicates number of slices with the letter 'z' at the top of the image.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - slices are the different focal depths that were imaged." +
+                        " Clue: Fiji indicates number of slices with the letter 'z' at the top of the image.", 80));
             }
             else{
-                IJ.showMessage("Correct! This image has 5 z-slices." +
-                        "\nThe slices shows the different depths at which the cell was imaged.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Correct! This image has 5 z-slices." +
+                        " The slices shows the different depths at which the cell was imaged.", 80));
             }
         }
         return true;
@@ -178,41 +180,46 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
 
         if(paramString.contains("bit")){
             if(Objects.equals(bitDepth, "16")){
-                IJ.showMessage("Correct! This is a 16-bit hyperstack. Every image in this stack" +
-                        " is a 16-bit image. \nThis means that the minimum value a pixel can have is 0, and the" +
-                        "\n maximum pixel value is 65535 (2^16 - 1). The pixels cannot contain negative values" +
-                        "\n nor non-whole numbers. Bit depth is always shown at the top of an image (for small" +
-                        "\n images you may have to zoom in with the + key to see this!)");
+                IJ.showMessage(GdFormatting.addLineBreaks("Correct! This is a 16-bit hyperstack. Every image " +
+                        "in this stack" +
+                        " is a 16-bit image. This means that the minimum value a pixel can have is 0, and the" +
+                        " maximum pixel value is 65535 (2^16 - 1). The pixels cannot contain negative values" +
+                        " nor non-whole numbers. Bit depth is always shown at the top of an image (for small" +
+                        " images you may have to zoom in with the + key to see this!)", 80));
             }
             else{
-                IJ.showMessage("Try again - Bit depth is always shown at the top of an image (for small\n" +
-                                   "n images you may have to zoom in with the + key to see this!)");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - Bit depth is always shown at the top " +
+                        "of an image (for small images you may have to zoom in with the + key to see this!)", 80));
             }
         }
 
         if(paramString.contains("pixel")){
             if(pixelSize.contains("0.0885")){
-                IJ.showMessage("Correct! Pixel width and height are almost always going to be equal and have the" +
-                        "\n same unit. Other commonly seen units are um and microns (which Fiji knows to calibrate as " +
-                        "\n micrometers), nm, and 'pixels' for images where Fiji cannot find pixel calibration metadata." +
-                        "\n You can change the pixel size manually in the Properties window if for some reason Fiji has got it wrong.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Correct! Pixel width and height are almost always " +
+                        "going to be equal and have the" +
+                        " same unit. Other commonly seen units are um and microns (which Fiji knows to calibrate as " +
+                        " micrometers), nm, and 'pixels' for images where Fiji cannot find pixel calibration metadata." +
+                        " You can change the pixel size manually in the Properties window if for some reason Fiji has got it wrong.", 80));
             }
             else{
-                IJ.showMessage("Try again - make sure you are looking at the pixel width or pixel height field in the" +
-                        "\n Properties window, and that you have the decimal point in the right place.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - make sure you are looking at the pixel width or " +
+                        "pixel height field in the" +
+                        " Properties window, and that you have the decimal point in the right place.", 80));
             }
 
         }
 
         if(paramString.contains("slice")){
             if(Objects.equals(sliceDepth, "1") || sliceDepth.contains("1.0")){
-                IJ.showMessage("Correct! The voxel depth tells you how far apart z slices are. The default voxel depth" +
-                        "\n is 1.0000000 - this will be displayed if there is no appropriate z calibration information" +
-                        "\n in the image metadata. However, here, the slice depth is indeed 1µm.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Correct! The voxel depth tells you how far apart " +
+                        "z slices are. The default voxel depth" +
+                        " is 1.0000000 - this will be displayed if there is no appropriate z calibration information" +
+                        " in the image metadata. However, here, the slice depth is indeed 1µm.", 80));
             }
             else{
-                IJ.showMessage("Try again - make sure you are looking at the voxel depth field in the" +
-                        "\nProperties window. A voxel is the 3D equivalent of a pixel, which is 2D.");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - make sure you are looking at the " +
+                        "voxel depth field in the" +
+                        "Properties window. A voxel is the 3D equivalent of a pixel, which is 2D.", 80));
             }
         }
 
@@ -221,8 +228,8 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
                 IJ.showMessage("Correct! A two-colour z-stack was acquired every 0.14 seconds");
             }
             else{
-                IJ.showMessage("Try again - make sure you are looking at the 'Frame interval' field in the" +
-                        "\nProperties window");
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - make sure you are looking at the " +
+                        "'Frame interval' field in the Properties window", 80));
             }
         }
     }

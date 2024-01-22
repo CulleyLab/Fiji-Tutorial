@@ -16,41 +16,36 @@ public class Hyperstack_colour implements PlugIn, DialogListener, ActionListener
     ImagePlus imp;
 
     public void beforeSetupDialog(){
-        // try and open current active image
-        imp = WindowManager.getCurrentImage();
-
-        // no currently open image - reload mitosis.tif
-        if(imp == null){
-            imp = IJ.openImage("http://imagej.net/images/Spindly-GFP.zip");
-            imp.show();
-        }
+        imp = OpenImageHelper.openMitosisTif();
+        imp.show();
     }
 
     public void setupDialog(){
         gd = new NonBlockingGenericDialog("Manipulating hyperstacks: colour");
 
-        gd.addMessage("We'll keep working on the image 'mitosis.tif' for this exercise." +
-                "\nIf it isn't open, you can find it by going to File > Open Samples > Mitosis (5D Stack)");
+        gd.addMessage(GdFormatting.addLineBreaks("We'll keep working on the image 'mitosis.tif' for this exercise." +
+                " If it isn't open, you can find it by going to File > Open Samples > Mitosis (5D Stack)", 80));
 
         gd.addMessage("");
 
-        gd.addMessage("For multi-channel images, you can choose to view them in a number of different ways." +
-                "\nOpen the Channels tool dialog either from Image > Color > Channels Tool... or by using" +
-                "\nthe keyboard shortcut shift + z." );
+        gd.addMessage(GdFormatting.addLineBreaks("For multi-channel images, you can choose to view them in a number of different ways." +
+                " Open the Channels tool dialog either from Image > Color > Channels Tool... or by using" +
+                " the keyboard shortcut shift + z.", 80));
 
-        gd.addMessage("The drop down menu shows different view options." +
+        gd.addMessage(GdFormatting.addLineBreaks("The drop down menu shows different view options." +
                 "'Composite' displays all channels overlaid, 'Color' displays the channels separately (you have" +
-                "\nto change the channel slider to view each channel), and 'Grayscale' displays the channels separately" +
-                "\nwithout any look-up table.");
+                " to change the channel slider to view each channel), and 'Grayscale' displays the channels separately" +
+                " without any look-up table.", 80));
 
         gd.addMessage("Set the display mode to 'Color', and only display channel 2");
-        gd.addMessage("You can change the look-up table from the Fiji toolbar. Close the Channels tool," +
-                "\nand press the LUT button on the Fiji toolbar. Change the look-up table to Cyan.");
+        gd.addMessage(GdFormatting.addLineBreaks("You can change the look-up table from the Fiji toolbar. " +
+                "Close the Channels tool," +
+                "and press the LUT button on the Fiji toolbar. Change the look-up table to Cyan.", 80));
 
         gd.addButton("Press to confirm you are only displaying channel 2, in cyan", this);
 
-        gd.addMessage("If you ever need to separate out different channels from a multicolour image" +
-                "\nstack, then a quick way of doing this is from Image > Color > Split Channels");
+        gd.addMessage(GdFormatting.addLineBreaks("If you ever need to separate out different channels from a multicolour image" +
+                "stack, then a quick way of doing this is from Image > Color > Split Channels", 80));
         gd.addButton("Press to confirm that you split the channels", this);
 
         gd.showDialog();
@@ -115,13 +110,15 @@ public class Hyperstack_colour implements PlugIn, DialogListener, ActionListener
                     if(imageTitle.startsWith("C2")) containsC2 = true;
                 }
                 if(containsC1 && containsC2){
-                    IJ.showMessage("Well done - you have successfully split the channels of this image." +
-                            "\nNote that each channel stack still has all the original time frames and z slices.");
+                    IJ.showMessage(GdFormatting.addLineBreaks("Well done - you have successfully split the " +
+                            "channels of this image." +
+                            " Note that each channel stack still has all the original time frames and z slices.", 80));
                     return;
                 }
                 else{
-                    IJ.showMessage("Try again - if you accidentally closed mitosis.tif, then you can" +
-                            "\nreopen it by going to File > Open Samples > Mitosis (5D stack)");
+                    IJ.showMessage(GdFormatting.addLineBreaks("Try again - if you accidentally closed " +
+                            "mitosis.tif, then you can" +
+                            "reopen it by going to File > Open Samples > Mitosis (5D stack)", 80));
                     return;
                 }
             }
