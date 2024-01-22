@@ -77,6 +77,7 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         gd.showDialog();
 
     }
+
     @Override
     public void run(String s) {
         beforeSetupDialog();

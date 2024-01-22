@@ -48,7 +48,13 @@ public class Hyperstack_colour implements PlugIn, DialogListener, ActionListener
                 "\nand press the LUT button on the Fiji toolbar. Change the look-up table to Cyan.");
 
         gd.addButton("Press to confirm you are only displaying channel 2, in cyan", this);
+
+        gd.addMessage("If you ever need to separate out different channels from a multicolour image" +
+                "\nstack, then a quick way of doing this is from Image > Color > Split Channels");
+        gd.addButton("Press to confirm that you split the channels", this);
+
         gd.showDialog();
+
     }
 
     @Override
@@ -91,6 +97,34 @@ public class Hyperstack_colour implements PlugIn, DialogListener, ActionListener
                 return;
             }
             IJ.showMessage("Well done! You have successfully manipulated the displayed colours.");
+        }
+
+        if(paramString.contains("split")){
+            int nImages = WindowManager.getImageCount();
+            if(nImages < 2){
+                IJ.showMessage("Please make sure you had mitosis.tif selected when you pressed" +
+                        "\nSplit Channels");
+                return;
+            }
+            else{
+                String[] imageTitles = WindowManager.getImageTitles();
+                boolean containsC1 = false;
+                boolean containsC2 = false;
+                for(String imageTitle:imageTitles){
+                    if(imageTitle.startsWith("C1")) containsC1 = true;
+                    if(imageTitle.startsWith("C2")) containsC2 = true;
+                }
+                if(containsC1 && containsC2){
+                    IJ.showMessage("Well done - you have successfully split the channels of this image." +
+                            "\nNote that each channel stack still has all the original time frames and z slices.");
+                    return;
+                }
+                else{
+                    IJ.showMessage("Try again - if you accidentally closed mitosis.tif, then you can" +
+                            "\nreopen it by going to File > Open Samples > Mitosis (5D stack)");
+                    return;
+                }
+            }
         }
 
     }
