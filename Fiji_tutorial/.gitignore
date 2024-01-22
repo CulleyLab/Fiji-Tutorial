@@ -33,3 +33,7 @@ bin/
 
 ### iml
 *.iml
+
+*.class
+*.tif
+.DS_Store
