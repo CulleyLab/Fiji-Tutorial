@@ -46,8 +46,8 @@ public class OpenImageHelper {
         return imp;
     }
 
-    public static ImagePlus openNup60Stack(){
-        ClassLoader classLoader = Exploring_images.class.getClassLoader();
+    public static ImagePlus getNup60Pombe(){
+        ClassLoader classLoader = OpenImageHelper.class.getClassLoader();
         String imagePath = "Nup60_pombe_z-stack.tif"; // Adjust the path accordingly
 
         // Use the class loader to load the image as a resource
@@ -58,8 +58,19 @@ public class OpenImageHelper {
     }
 
     public static ImagePlus getLocalMitosisTif(){
-        ClassLoader classLoader = Exploring_images.class.getClassLoader();
+        ClassLoader classLoader = OpenImageHelper.class.getClassLoader();
         String imagePath = "mitosis.tif"; // Adjust the path accordingly
+
+        // Use the class loader to load the image as a resource
+        java.net.URL imageURL = classLoader.getResource(imagePath);
+        ImagePlus imp = IJ.openImage(imageURL.toString());
+
+        return imp;
+    }
+
+    public static ImagePlus getNLSPombeLowTif(){
+        ClassLoader classLoader = OpenImageHelper.class.getClassLoader();
+        String imagePath = "NLS_pombe_low.tif"; // Adjust the path accordingly
 
         // Use the class loader to load the image as a resource
         java.net.URL imageURL = classLoader.getResource(imagePath);
@@ -71,7 +82,7 @@ public class OpenImageHelper {
     public static void main(String[] arg){
         new ij.ImageJ();
         ImagePlus imp1 = getLocalMitosisTif();
-        ImagePlus imp2 = openNup60Stack();
+        ImagePlus imp2 = getNup60Pombe();
 
         imp1.show();
         imp2.show();

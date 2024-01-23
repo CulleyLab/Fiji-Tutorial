@@ -26,7 +26,7 @@ public class Exploring_images implements PlugIn, DialogListener, ActionListener 
 
         // load pombe image
 
-        imp = OpenImageHelper.openNup60Stack();
+        imp = OpenImageHelper.getNup60Pombe();
 
         imp.show();
 
