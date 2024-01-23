@@ -35,6 +35,6 @@ bin/
 *.iml
 
 *.class
-*.tif
+#*.tif
 .DS_Store
 /META-INF
