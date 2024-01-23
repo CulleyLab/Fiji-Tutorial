@@ -79,6 +79,17 @@ public class OpenImageHelper {
         return imp;
     }
 
+    public static ImagePlus getNLSPombeHighTif(){
+        ClassLoader classLoader = OpenImageHelper.class.getClassLoader();
+        String imagePath = "NLS_pombe_high.tif"; // Adjust the path accordingly
+
+        // Use the class loader to load the image as a resource
+        java.net.URL imageURL = classLoader.getResource(imagePath);
+        ImagePlus imp = IJ.openImage(imageURL.toString());
+
+        return imp;
+    }
+
     public static void main(String[] arg){
         new ij.ImageJ();
         ImagePlus imp1 = getLocalMitosisTif();
