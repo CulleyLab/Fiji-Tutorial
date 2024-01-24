@@ -1,5 +1,6 @@
 import ij.IJ;
 import ij.ImagePlus;
+import ij.WindowManager;
 import ij.gui.*;
 import ij.plugin.PlugIn;
 import ij.plugin.Text;
@@ -30,19 +31,51 @@ public class ScaleBars_Annotations implements PlugIn, ActionListener, DialogList
 
         gd.addMessage(GdFormatting.addLineBreaks("You can add ROIs to the overlay. Double click the line button " +
                 "in the toolbar and select the arrow tool. Draw an arrow on the image, and press b on the keyboard (or go " +
-                "to Image > Overlay > Add selection.... Before drawing a ROI, you can select its colour by double clicking the colour dropper in the " +
+                "to Image > Overlay > Add selection...). Before adding the ROI to the overlay, you can select its colour by double clicking the colour dropper in the " +
                 "Fiji toolbar.", 80));
         gd.addMessage(GdFormatting.addLineBreaks("As well as ROI shapes, you can also add text to the overlay. "+
                 "The capital A in the Fiji toolbar is the text tool, and double clicking on this allows you to set font and " +
                 "size. Drag a text box onto the image, type something meaningful in it, and then go to Image > Overlay > Add " +
                 "Selection... or press Ctrl + b to add it to the overlay.", 80));
         gd.addButton("Check my Overlay contains an arrow and some text (it can contain other stuff as well!)", this);
-
+        gd.addMessage(GdFormatting.addLineBreaks("To store the contents of the overlay into the image," +
+                " go to Image > Overlay > Flatten (or use keyboard shortcut shift + f). This compresses the overlay and " +
+                "any colour channels into a single image.", 80));
+        gd.addChoice("What is the type of the image after flattening?",
+                new String[]{"--select one--", "8 bit", "16 bit", "32 bit", "RGB colour"}, "--select one--");
         gd.showDialog();
     }
 
     @Override
     public boolean dialogItemChanged(GenericDialog genericDialog, AWTEvent awtEvent) {
+        if(awtEvent==null){return true;}
+
+        String paramString = awtEvent.paramString();
+
+        String name = "";
+        if(awtEvent.getSource() instanceof Choice){
+            Choice choice = (Choice) awtEvent.getSource();
+            name = choice.getName();
+        }
+        if(name.equals("choice0")){
+            if(paramString.contains("8")){
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - look at the top bar of the image.", 80));
+            }
+            else if(paramString.contains("16")){
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - look at the top bar of the image.", 80));
+            }
+            else if(paramString.contains("32")){
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - look at the top bar of the image.", 80));
+            }
+            else if(paramString.contains("RGB")){
+                IJ.showMessage(GdFormatting.addLineBreaks("Well done! Once an image has been flattened to RGB, " +
+                        "it can be saved in JPEG and PNG formats without losing information. You should flatten images with " +
+                        "overlays to RGB even if they only have one colour channel. However, you can't convert back " +
+                        "from RGB to 16 bit, so you should not do any analysis on images after they have been flattened " +
+                        "to RGB.", 80));
+            }
+        }
+
         return true;
     }
 
@@ -50,6 +83,7 @@ public class ScaleBars_Annotations implements PlugIn, ActionListener, DialogList
     public void run(String s) {
         beforeSetupDialog();
         setupDialog();
+        WindowManager.closeAllWindows();
     }
 
     public static void main(String[] args){
@@ -82,6 +116,11 @@ public class ScaleBars_Annotations implements PlugIn, ActionListener, DialogList
         }
         else if(paramString.contains("arrow")){
             Overlay overlay = imp.getOverlay();
+            if(overlay==null){
+                IJ.showMessage("Try again - there isn't anything in the overlay of this image.");
+                return;
+            }
+
             Roi[] overlayRois = overlay.toArray();
             boolean foundArrow = false;
             boolean foundText = false;
