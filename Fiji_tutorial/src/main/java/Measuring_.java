@@ -1,5 +1,6 @@
 import ij.IJ;
 import ij.ImagePlus;
+import ij.WindowManager;
 import ij.gui.DialogListener;
 import ij.gui.GenericDialog;
 import ij.gui.NonBlockingGenericDialog;
@@ -50,9 +51,17 @@ public class Measuring_ implements PlugIn, ActionListener, DialogListener {
 
         gd.addMessage(GdFormatting.addLineBreaks("You can measure an image by pressing the m key on the keyboard. " +
                 "If there is an active ROI on the image, it will restrict the measurements to this, otherwise it will measure the " +
-                "whole image. Measure the image along your line ROI by pressing m", 80));
+                "whole image. Measure the image along your line ROI by pressing the m key.", 80));
 
         gd.addButton("Check I made a measurement correctly", this);
+
+        gd.addMessage(GdFormatting.addLineBreaks("For line profiles, you can also plot the pixel values along " +
+                "the line. Draw a new line ROI perpendicular to the saved ROI, so that it passes through the thin line " +
+                "between the nuclei. You can then view the intensity profile along this line by going to Analyze > Plot " +
+                "Profile or by using the keyboard shortcut k.", 80));
+        gd.addMessage(GdFormatting.addLineBreaks("If you press the 'Live' button in the plot window, the plot " +
+                "will update as you move the line around the image. You can add some averaging by increasing the line " +
+                "thickness - this is accessed by double-clicking the line icon in the Fiji toolbar.", 80));
 
         gd.showDialog();
     }
@@ -69,6 +78,7 @@ public class Measuring_ implements PlugIn, ActionListener, DialogListener {
     public void run(String s) {
         beforeSetupDialog();
         setupDialog();
+        WindowManager.closeAllWindows();
     }
 
     public static void main(String[] args){
