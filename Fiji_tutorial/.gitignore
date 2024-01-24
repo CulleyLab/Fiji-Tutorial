@@ -38,4 +38,5 @@ bin/
 #*.tif
 .DS_Store
 /META-INF
-/target/*
+/src/main/target/
+/target/
