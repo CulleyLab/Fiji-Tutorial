@@ -61,7 +61,7 @@ public class Thresholding_ implements PlugIn, DialogListener, ActionListener {
         gd.addMessage(GdFormatting.addLineBreaks("From the binary mask, we can measure the shapes " +
                 "of the segmented objects. However, first let's try and clean up the mask a bit. Duplicate the binary mask " +
                 "so that you have two copies of it to work on. On one copy, go to Process > Binary > Close-. On the other " +
-                "copy, go to Process > Binary > Open.", 110));
+                "copy, go to Process > Binary > Open.", 109));
         gd.addChoice("Which option best describes the effect of the Close operation?",
                 morphChoice, morphChoice[0]);
         gd.addChoice("Which option best describes the effect of the Open operation?",
@@ -72,8 +72,14 @@ public class Thresholding_ implements PlugIn, DialogListener, ActionListener {
         gd.addMessage(GdFormatting.addLineBreaks("Close the image that you applied the open operation to. " +
                 "Now, select the image that you applied the Close to, and apply the Open operation on top of that. This " +
                 "should remove the background single pixels without significantly affecting the other objects.", 110));
-
-
+        gd.addMessage(GdFormatting.addLineBreaks("In Set Measurements..., untick 'Mean gray level' and tick " +
+                "'Shape descriptors'. Now, on your processed binary mask, go to Analyze > Analyze Particles.... Tick " +
+                "'Display results', 'Clear results', and 'Add to Manager", 110));
+        gd.addMessage(GdFormatting.addLineBreaks("We now have measurements of each separate object in the " +
+                "Results window, and an ROI in the ROI manager for each object. We can get statistics on the " +
+                "measurements by right clicking on the Results window and selecting 'Summarize'.", 110));
+        gd.addStringField("What is the mean circularity of the nuclei?", "");
+        gd.addButton("Check circularity answer", this);
         gd.showDialog();
     }
 
@@ -192,6 +198,33 @@ public class Thresholding_ implements PlugIn, DialogListener, ActionListener {
         } else if (paramString.contains("raw data")){
             imp = OpenImageHelper.getNLSPombeLowTif();
             imp.show();
+        } else if (paramString.contains("circularity")) {
+            String areaString = gd.getNextString();
+            String circString = gd.getNextString();
+            if(circString.isEmpty()) return;
+            double circ = parseDouble(circString);
+            if(circ > 1){
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - circularities should have values " +
+                        "in the range 0 to 1. Are you looking at the right column?", 80));
+            }
+            else if(circ==0.855){
+                IJ.showMessage(GdFormatting.addLineBreaks("Well done - this is a nice clean segmentation, " +
+                        "and all the values from the analysed particles make sense. If we still had any spurious single " +
+                        "pixel or partial nuclei in our mask, we could have filtered for size in the the Analyze Particles " +
+                        "dialog box.", 80));
+            }
+            else if(circ==0.867){
+                IJ.showMessage(GdFormatting.addLineBreaks("Well done! You probably still have a couple of small " +
+                        "non-nucleus objects in your image that weren't removed when we cleaned up the mask (they'll have " +
+                        "small sizes and high circularities in the Results table). We can prevent objects outside of a " +
+                        "reasonable size range from reaching our analysis by filtering by size in the Analyze Particles " +
+                        "window.", 80));
+            }
+            else{
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - I was expecting a different value! Make " +
+                        "sure that you thresholded the raw data with an appropriate method, then performed a Close followed " +
+                        "by an Open on the binary mask before analysing the particles.", 80));
+            }
         }
 
     }
