@@ -2,6 +2,7 @@ import ij.IJ;
 import ij.ImagePlus;
 import ij.gui.*;
 import ij.plugin.PlugIn;
+import ij.plugin.Text;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -85,8 +86,19 @@ public class ScaleBars_Annotations implements PlugIn, ActionListener, DialogList
             boolean foundArrow = false;
             boolean foundText = false;
             for(Roi roi:overlayRois){
-                if(roi.getType()==Roi.LINE) foundArrow = true;
-                roi.tex
+                if(roi.toString().contains("Arrow")) foundArrow = true;
+                if(roi.toString().contains("Text")) foundText = true;
+            }
+            if(!foundArrow){
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - have you added an arrow to the overlay " +
+                        "of your image?", 80));
+            }
+            else if(!foundText){
+                IJ.showMessage(GdFormatting.addLineBreaks("Try again - have you added some text to the overlay " +
+                        "of your image?", 80));
+            }
+            else{
+                IJ.showMessage("Well done!");
             }
         }
 
