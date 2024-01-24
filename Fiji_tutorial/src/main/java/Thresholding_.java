@@ -96,7 +96,7 @@ public class Thresholding_ implements PlugIn, DialogListener, ActionListener {
         }
 
 
-        if(name=="choice0") {
+        if(name.equals("choice0")) {
             if (paramString.contains("MaxEntropy") || paramString.contains("RenyiEntropy") || paramString.contains("Yen")) {
                 IJ.showMessage(GdFormatting.addLineBreaks("Well done - these three methods seem to do the best " +
                         "job of segmenting the nuclei from this noisy data. You can also manually adjust the threshold using " +
@@ -121,7 +121,7 @@ public class Thresholding_ implements PlugIn, DialogListener, ActionListener {
                 IJ.showMessage(GdFormatting.addLineBreaks("Try again - resize the window if you can't see " +
                         "the bit depth listed at the top of the image.", 80));
             }
-        } else if (name=="choice1") {
+        } else if (name.equals("choice1")) {
             if(paramString.contains(morphChoice[3])){
                 IJ.showMessage(GdFormatting.addLineBreaks("Well done - the binary close operation first " +
                         "performs a dilation (the boundaries of all objects become bigger by one pixel) followed by " +
@@ -134,7 +134,7 @@ public class Thresholding_ implements PlugIn, DialogListener, ActionListener {
                         "close operation, press Ctrl + z to undo it (pressing again will redo it) to see if you can " +
                         "notice the difference.", 80));
             }
-        } else if (name=="choice2") {
+        } else if (name.equals("choice2")) {
             if(paramString.contains(morphChoice[1])){
                 IJ.showMessage(GdFormatting.addLineBreaks("Well done - the binary open operation first " +
                         "performs an erosion (the boundaries of all objects are shrunk inwards by one pixel) followed " +
