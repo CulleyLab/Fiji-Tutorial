@@ -25,9 +25,10 @@ public class Managing_images implements PlugIn {
                 "you've already saved what you need. To get around this, the keyboard shortcut shift + w will close all the windows " +
                 "(but without dialog to confirm, so only use if you're certain). You can then exit Fiji quickly.", 80 ));
 
+        gd.showDialog();
     }
     @Override
     public void run(String s) {
-
+        setupDialog();
     }
 }
