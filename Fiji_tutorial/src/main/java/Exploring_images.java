@@ -38,28 +38,28 @@ public class Exploring_images implements PlugIn, DialogListener, ActionListener 
 
         gd.addMessage("An image called 'Nup60_pombe_z-stack.tif' should have opened.");
 
-        gd.addMessage(GdFormatting.addLineBreaks("To zoom in and out of the images you can either use the + and - keys on" +
+        gd.addMessage(GdFormatting.addLineBreaks("To zoom in and out of an image you can either use the + and - keys on" +
                 " your keyboard, or the magnifying glass in the Fiji toolbar (click to zoom in," +
-                " double-click to zoom out.", 80));
+                " double-click to zoom out.", 100));
 
         //TODO how to get zoom factor?
 
         gd.addMessage(GdFormatting.addLineBreaks("At the top of the image, below the title, there is a bar containing information" +
                 " about the image. At the bottom, there is a scrollbar for navigating between different images" +
-                " in the same window (this is a z stack)", 80));
+                " in the same window (this is a z stack)", 100));
         gd.addMessage("You can navigate through different images in a single window in the following ways:" +
                 "\n- Using the arrow keys on your keyboard" +
                 "\n- Using the < (comma) and > (full stop) keys on your keyboard" + "\n"+
                 GdFormatting.addLineBreaks("- Using 'Set Slice' to set an exact location. This can be accessed from either the Stk" +
-                " button in the Fiji toolbar, or by navigating to Image > Stacks > Set Slice...", 80));
+                " button in the Fiji toolbar, or by navigating to Image > Stacks > Set Slice...", 100));
 
 
-        gd.addMessage(GdFormatting.boldBlue("Move to the 12th image in Nup60_pombe_z-stack.tif"));
+        gd.addMessage("Move to the 12th image in Nup60_pombe_z-stack.tif");
         gd.addButton("Check you're in the right place", this);
 
         gd.addMessage(GdFormatting.addLineBreaks("When you hover over a pixel with your mouse, the location and intensity value of that" +
                 " pixel will be displayed in the Fiji toolbar. In Fiji's coordinate system, (0,0) is in the " +
-                " top left corner of the image.", 80));
+                " top left corner of the image.", 100));
         gd.addStringField("What is the value of pixel (347,611) in the 12th image of Nup60_pombe?", "");
         gd.addButton("Check pixel value answer", this);
 
@@ -68,17 +68,17 @@ public class Exploring_images implements PlugIn, DialogListener, ActionListener 
                 "\n- Go to Analyze > Histogram" +
                 "\n- Use the keyboard shortcut by pressing h when the image is selected");
         gd.addMessage(GdFormatting.addLineBreaks("Display the histogram. Press 'No' when asked if you want to include all 22 slices to just" +
-                " get the histogram of the 12th image.", 80));
+                " get the histogram of the 12th image.", 100));
         gd.addStringField("What is the highest pixel intensity in the 12th image of Nup60-pombe?", "");
         gd.addButton("Check maximum pixel intensity answer", this);
 
         gd.addMessage(GdFormatting.addLineBreaks("You can change the display range to make it easier to see" +
-                "features in images. This is done via the Brightness/Contrast tool. This can be accessed either:", 80)+"" +
+                " features in images. This is done via the Brightness/Contrast tool. This can be accessed either:", 100)+"" +
                 "\n- From the menus Image > Adjust > Brightness/Contrast..." +
                 "\n- Using the keyboard short cut shift + c");
-        gd.addRadioButtonGroup("Does changing the brightness and contrast sliders alter the " +
-                "pixel values in the image?", new String[]{"?", "Yes", "No", "Only if you press 'Apply'"},
-                1, 4, "?");
+        gd.addChoice("Does changing the brightness and contrast sliders alter the " +
+                "pixel values in the image?", new String[]{"--select one--", "Yes", "No", "Only if you press 'Apply'"},
+                "--select one--");
 
         gd.showDialog();
     }
@@ -130,6 +130,7 @@ public class Exploring_images implements PlugIn, DialogListener, ActionListener 
     public void actionPerformed(ActionEvent e) {
         String paramString = e.paramString();
 
+        gd.resetCounters();
         String pixelValue = gd.getNextString();
         String maxIntensity = gd.getNextString();
 

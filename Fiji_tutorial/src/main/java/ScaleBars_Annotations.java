@@ -3,11 +3,12 @@ import ij.ImagePlus;
 import ij.WindowManager;
 import ij.gui.*;
 import ij.plugin.PlugIn;
-import ij.plugin.Text;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class ScaleBars_Annotations implements PlugIn, ActionListener, DialogListener {
     NonBlockingGenericDialog gd;
@@ -142,4 +143,5 @@ public class ScaleBars_Annotations implements PlugIn, ActionListener, DialogList
         }
 
     }
+
 }

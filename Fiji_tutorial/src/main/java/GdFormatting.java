@@ -18,7 +18,7 @@ public class GdFormatting {
                 else{
                     outString.append(" ").append(thisString);
                 }
-                lineLength += stringLength;
+                lineLength += stringLength + 1;
             }
             else {
                 lineLength = stringLength;

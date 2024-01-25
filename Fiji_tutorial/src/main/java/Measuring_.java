@@ -95,9 +95,11 @@ public class Measuring_ implements PlugIn, ActionListener, DialogListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String paramString = e.paramString();
+        gd.resetCounters();
+        String roughMeasurementString = gd.getNextString();
 
         if(paramString.contains("rough")){
-            String roughMeasurementString = gd.getNextString();
+
             if(roughMeasurementString.isEmpty()) return;
             double roughMeasurement = parseDouble(roughMeasurementString);
 

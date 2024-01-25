@@ -26,8 +26,6 @@ public class Hyperstack_colour implements PlugIn, DialogListener, ActionListener
         gd.addMessage(GdFormatting.addLineBreaks("We'll keep working on the image 'mitosis.tif' for this exercise." +
                 " If it isn't open, you can find it by going to File > Open Samples > Mitosis (5D Stack)", 80));
 
-        gd.addMessage("");
-
         gd.addMessage(GdFormatting.addLineBreaks("For multi-channel images, you can choose to view them in a number of different ways." +
                 " Open the Channels tool dialog either from Image > Color > Channels Tool... or by using" +
                 " the keyboard shortcut shift + z.", 80));
@@ -37,9 +35,9 @@ public class Hyperstack_colour implements PlugIn, DialogListener, ActionListener
                 " to change the channel slider to view each channel), and 'Grayscale' displays the channels separately" +
                 " without any look-up table.", 80));
 
-        gd.addMessage("Set the display mode to 'Color', and only display channel 2");
+        gd.addMessage(" Set the display mode to 'Color', and only display channel 2");
         gd.addMessage(GdFormatting.addLineBreaks("You can change the look-up table from the Fiji toolbar. " +
-                "Close the Channels tool," +
+                "Close the Channels tool, " +
                 "and press the LUT button on the Fiji toolbar. Change the look-up table to Cyan.", 80));
 
         gd.addButton("Press to confirm you are only displaying channel 2, in cyan", this);

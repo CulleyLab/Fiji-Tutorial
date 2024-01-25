@@ -1,5 +1,6 @@
 import ij.IJ;
 import ij.ImagePlus;
+import ij.WindowManager;
 import ij.gui.DialogListener;
 import ij.gui.GenericDialog;
 import ij.gui.NonBlockingGenericDialog;
@@ -29,21 +30,21 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
 
         gd.addMessage("");
 
-        gd.addRadioButtonGroup("How many pixels wide is this image?",
-                new String[]{"?", "15.13 pixels wide", "17.35 pixels wide", "171 pixels wide",
-                "196 pixels wide"}, 1,5, "?");
+        gd.addChoice("How many pixels wide is this image?",
+                new String[]{"--select one--", "15.13 pixels wide", "17.35 pixels wide", "171 pixels wide",
+                "196 pixels wide"}, "--select one--");
 
-        gd.addRadioButtonGroup("How many channels are in this image?",
-                new String[]{"?", "2 channels", "5 channels", "51 channels"},
-                1, 3, "?");
+        gd.addChoice("How many channels are in this image?",
+                new String[]{"--select one--", "2 channels", "5 channels", "51 channels"},
+                "--select one--");
 
-        gd.addRadioButtonGroup("How many time points (frames) are in this image?",
-                new String[] {"?", "2 frames", "5 frames", "51 frames"},
-                1, 3, "?");
+        gd.addChoice("How many time points (frames) are in this image?",
+                new String[] {"--select one--", "2 frames", "5 frames", "51 frames"},
+                "--select one--");
 
-        gd.addRadioButtonGroup("How many z planes (slices) are in this image?",
-                new String[] {"?", "2 slices", "5 slices", "51 slices"},
-                1, 3, "?");
+        gd.addChoice("How many z planes (slices) are in this image?",
+                new String[] {"--select one--", "2 slices", "5 slices", "51 slices"},
+                "--select one--");
 
         gd.addMessage("");
 
@@ -63,7 +64,7 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
         gd.addStringField("What is the pixel size in this hyperstack (in µm)?", "");
         gd.addButton("Check pixel size answer", this);
 
-        gd.addStringField("What is the distance between z slices in this hyperstack (in µm)>", "");
+        gd.addStringField("What is the distance between z slices in this hyperstack (in µm)?", "");
         gd.addButton("Check z slice answer", this);
 
         gd.addStringField("How long is there between time points (in seconds)?", "");
@@ -84,6 +85,7 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
     public void run(String s) {
         beforeSetupDialog();
         setupDialog();
+        WindowManager.closeAllWindows();
     }
 
     public static void main(String[] args){
@@ -159,6 +161,7 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        gd.resetCounters();
         String nImages = gd.getNextString();
         String bitDepth = gd.getNextString();
 
@@ -197,7 +200,7 @@ public class Image_Info implements PlugIn, DialogListener, ActionListener {
             if(pixelSize.contains("0.0885")){
                 IJ.showMessage(GdFormatting.addLineBreaks("Correct! Pixel width and height are almost always " +
                         "going to be equal and have the" +
-                        " same unit. Other commonly seen units are um and microns (which Fiji knows to calibrate as " +
+                        " same unit. Other commonly seen units are um and microns (which Fiji knows to calibrate as" +
                         " micrometers), nm, and 'pixels' for images where Fiji cannot find pixel calibration metadata." +
                         " You can change the pixel size manually in the Properties window if for some reason Fiji has got it wrong.", 80));
             }

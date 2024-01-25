@@ -45,10 +45,11 @@ public class Hyperstack_time implements PlugIn, DialogListener, ActionListener {
                 "just duplicate out a portion of the projected frames. You can do this via the keyboard shortcut shift + d, " +
                 "or by going to Image > Duplicate...", 80));
 
-        gd.addMessage("Duplicate out a new stack which contains both channels but only contains time frames 21-50");
+        gd.addMessage(GdFormatting.addLineBreaks("Duplicate out a new stack from the maximum intensity projection " +
+                "which contains both channels but only contains time frames 21-50", 80));
         gd.addButton("Check the duplication (make sure new stack is active image)", this);
 
-        gd.addMessage(GdFormatting.addLineBreaks("Now, let's make a montage of this portion of frames. " +
+        gd.addMessage(GdFormatting.addLineBreaks("Now, let's make a montage of this subset of frames. " +
                 "Go to Images > Stacks > Make Montage...", 80));
 
         gd.addMessage(GdFormatting.addLineBreaks("Make a 6 x 5 montage of the maximum intensity projection of " +
@@ -63,6 +64,7 @@ public class Hyperstack_time implements PlugIn, DialogListener, ActionListener {
     public void run(String s) {
         beforeSetupDialog();
         setupDialog();
+        WindowManager.closeAllWindows();
     }
 
     public static void main(String[] args){

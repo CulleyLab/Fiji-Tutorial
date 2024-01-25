@@ -38,18 +38,18 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
                 " of mitosis.tif (keep 'all time frames' ticked)", 80));
         gd.addButton("Check you have made the projections correctly", this);
 
-        gd.addRadioButtonGroup("Which projection method looks brighter?",
-                new String[]{"?", "Average is brighter", "Max is brighter", "Both same brightness"},
-                2, 2, "?");
+        gd.addChoice("Which projection method looks brighter?",
+                new String[]{"--select one--", "Average is brighter", "Max is brighter", "Both same brightness"},
+                "--select one--");
 
-        gd.addRadioButtonGroup("Which projection method looks sharper?",
-                new String[]{"?", "Average is sharper", "Max is sharper", "Both same sharpness"},
-                2, 2, "?");
+        gd.addChoice("Which projection method looks sharper?",
+                new String[]{"--select one--", "Average is sharper", "Max is sharper", "Both same sharpness"},
+                "--select one--");
 
-        gd.addRadioButtonGroup("What happens if you do an average intensity z projection of" +
+        gd.addChoice("What happens if you do an average intensity z projection of" +
                 "\nyour maximum intensity projected stack (MAX_mitosis.tif)?",
-                new String[]{"?", "Nothing", "The channels are averaged", "The frames are averaged"},
-                2, 2, "?");
+                new String[]{"--select one--", "Nothing", "The channels are averaged", "The frames are averaged"},
+                "--select one--");
 
         gd.addMessage(GdFormatting.addLineBreaks("Fiji can display images in 3D, but it is slow to render " +
                 "and doesn't look very nice. If you want to do this (on the original mitosis.tif image, without " +
@@ -118,6 +118,7 @@ public class Hyperstack_z implements PlugIn, DialogListener, ActionListener {
     public void run(String s) {
         beforeSetupDialog();
         setupDialog();
+        WindowManager.closeAllWindows();
     }
 
     public static void main(String[] args){

@@ -31,15 +31,15 @@ public class Filtering_ implements PlugIn, DialogListener, ActionListener {
 
         gd.addMessage(GdFormatting.addLineBreaks("Sometimes we'll want to process our images before analysis " +
                 "(because noise in the image is making analysis inaccurate) or for visual clarity. The simplest form of " +
-                "image processing is filtering", 80));
+                "image processing is filtering", 110));
 
         gd.addMessage(GdFormatting.addLineBreaks("Fiji's pre-installed filters live in Process > Filters. There " +
                 "are several filtering options, but for demonstration we're just going to use Gaussian filtering.",
-                80));
+                110));
 
         gd.addMessage(GdFormatting.addLineBreaks("On the NLS_pombe_low.tif image, explore the effect of Gaussian " +
                 "filtering (Process > Filters > Gaussian blur...) by previewing filters of different sizes (the default " +
-                "is that these sizes are entered in pixels)", 80));
+                "is that these sizes are entered in pixels)", 110));
 
         gd.addMessage("A small radius Gaussian blur can be used to reduce single pixel shot noise in images.");
 
@@ -48,7 +48,7 @@ public class Filtering_ implements PlugIn, DialogListener, ActionListener {
         gd.addButton("Check maximum structure-maintaining radius answer", this);
 
         gd.addMessage(GdFormatting.addLineBreaks("If you applied the above blur, then use the button at the " +
-                "top of this window to re-open the raw image.", 80));
+                "top of this window to re-open the raw image.", 110));
 
         gd.addMessage("A large radius Gaussian blur can be used to identify background in images.");
 
@@ -59,14 +59,14 @@ public class Filtering_ implements PlugIn, DialogListener, ActionListener {
         gd.addMessage(GdFormatting.addLineBreaks("We can combine the results of a large Gaussian blur and " +
                 "a small Gaussian blur to remove both pixel-level noise and background. Duplicate two copies of the raw " +
                 "image, and rename (Image > Rename... or right-click on image and select from menu) one as 'small blur' " +
-                "and the other as 'large blur'.", 80));
+                "and the other as 'large blur'.", 110));
         gd.addMessage(GdFormatting.addLineBreaks("Apply a noise-reducing small radius Gaussian blur to " +
-                "'small blur' and a background-defining large radius Gaussian blur to 'large blur'.", 80));
+                "'small blur' and a background-defining large radius Gaussian blur to 'large blur'.", 110));
         gd.addMessage(GdFormatting.addLineBreaks("Now, we will subtract the background from the de-noised " +
                 "foreground. Go to Process > Image Calculator... and set up this window so that you are performing " +
                 "'small blur' Subtract 'large blur'. Check the 'Create new window' box, but do not check the '32-bit " +
-                "float result' box.", 80));
-        gd.addMessage(GdFormatting.addLineBreaks("This process is known as a Difference-of-Gaussians (DoG) filter", 80));
+                "float result' box.", 110));
+        gd.addMessage(GdFormatting.addLineBreaks("This process is known as a Difference-of-Gaussians (DoG) filter", 110));
         gd.addButton("Check my DoG-filtered image", this);
 
         gd.showDialog();
@@ -103,17 +103,18 @@ public class Filtering_ implements PlugIn, DialogListener, ActionListener {
     public void actionPerformed(ActionEvent e) {
         String paramString = e.paramString();
 
+        gd.resetCounters();
+        String maxGoodGaussianString = gd.getNextString();
+        String smallestLargeGaussianString = gd.getNextString();
+
         if(paramString.contains("reload")){
             imp = OpenImageHelper.getNLSPombeLowTif();
             imp.show();
             return;
         }
 
-        String maxGoodGaussianString = gd.getNextString();
-        String smallestLargeGaussianString = gd.getNextString();
-
-
         if(paramString.contains("maximum")){
+
             if(maxGoodGaussianString.isEmpty()) return;
             double maxGoodGaussian = parseDouble(maxGoodGaussianString);
 
