@@ -87,39 +87,18 @@ public class LUTs_and_colour implements PlugIn, DialogListener, ActionListener {
         String paramString = e.paramString();
         if(paramString.contains("Open")){
             try {
-                openWebpage(new URL("https://www.ascb.org/science-news/how-to-make-scientific-figures-accessible-to-readers-with-color-blindness/"));
+                LinksHelper.openWebpage(new URL("https://www.ascb.org/science-news/how-to-make-scientific-figures-accessible-to-readers-with-color-blindness/"));
             } catch (MalformedURLException ex) {
                 throw new RuntimeException(ex);
             }
         }
         else if(paramString.contains("perceptual")){
             try {
-                openWebpage(new URL("https://colorcet.com/"));
+                LinksHelper.openWebpage(new URL("https://colorcet.com/"));
             } catch (MalformedURLException ex) {
                 throw new RuntimeException(ex);
             }
         }
     }
 
-    public static boolean openWebpage(URI uri) {
-        Desktop desktop = Desktop.isDesktopSupported() ? Desktop.getDesktop() : null;
-        if (desktop != null && desktop.isSupported(Desktop.Action.BROWSE)) {
-            try {
-                desktop.browse(uri);
-                return true;
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }
-
-    public static boolean openWebpage(URL url) {
-        try {
-            return openWebpage(url.toURI());
-        } catch (URISyntaxException e) {
-            e.printStackTrace();
-        }
-        return false;
-    }
 }
